@@ -13,19 +13,16 @@ import com.example.tacocloud.models.Order;
 import com.example.tacocloud.models.Taco;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.RequiredArgsConstructor;
-
 @Repository
-@RequiredArgsConstructor
 public class JdbcOrderRepository implements OrderRepository {
-    private final JdbcTemplate jdbcTemplate;
-    private final SimpleJdbcInsert orderInserter = new SimpleJdbcInsert(jdbcTemplate)
-            .withTableName("Taco_Order")
-            .usingGeneratedKeyColumns("id");
-    private final SimpleJdbcInsert orderToTacoInserter = new SimpleJdbcInsert(jdbcTemplate)
-            .withTableName("Taco_Order_Tacos");
+    private final SimpleJdbcInsert orderInserter;
+    private final SimpleJdbcInsert orderToTacoInserter;
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    public JdbcOrderRepository(JdbcTemplate jdbcTemplate) {
+        orderInserter = new SimpleJdbcInsert(jdbcTemplate).withTableName("Taco_Order").usingGeneratedKeyColumns("id");
+        orderToTacoInserter = new SimpleJdbcInsert(jdbcTemplate).withTableName("Taco_Order_Tacos");
+    }
 
     @Override
     public Order save(Order order) {

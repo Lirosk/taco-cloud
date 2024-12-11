@@ -21,13 +21,12 @@ import com.example.tacocloud.repositories.TacoRepository;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 @Controller
 @RequestMapping("/design")
-@RequiredArgsConstructor
 @SessionAttributes("order")
+@RequiredArgsConstructor
 public class DesignTacoController {
     private final IngredientRepository ingredientRepository;
     private final TacoRepository tacoRepository;
@@ -53,12 +52,11 @@ public class DesignTacoController {
                     filterByType(ingredients, type));
         }
 
-        model.addAttribute("design", new Taco());
         return "design";
     }
 
     @PostMapping
-    public String processDesign(@Valid Taco design, @ModelAttribute Order order, Errors errors) {
+    public String processDesign(@Valid Taco design, Errors errors, @ModelAttribute Order order) {
         if (errors.hasErrors()) {
             return "design";
         }
@@ -69,8 +67,7 @@ public class DesignTacoController {
         return "redirect:/orders/current";
     }
 
-    private List<Ingredient> filterByType(
-            List<Ingredient> ingredients, Ingredient.Type type) {
+    private List<Ingredient> filterByType(List<Ingredient> ingredients, Ingredient.Type type) {
         return ingredients
                 .stream()
                 .filter(x -> x.getType().equals(type))

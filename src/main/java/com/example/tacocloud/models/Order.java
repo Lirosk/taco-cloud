@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -18,21 +19,23 @@ public class Order {
     private Date placedAt;
 
     @NotBlank(message = "Name is required")
-    private String name;
+    private String deliveryName;
 
     @NotBlank(message = "Street is required")
-    private String street;
+    private String deliveryStreet;
 
     @NotBlank(message = "City is required")
-    private String city;
+    private String deliveryCity;
 
     @NotBlank(message = "State is required")
-    private String state;
+    @Size(max = 2, message = "Max length is 2")
+    private String deliveryState;
 
     @NotBlank(message = "Zip code is required")
-    private String zip;
+    private String deliveryZip;
 
-    @CreditCardNumber(ignoreNonDigitCharacters = true, message = "Not a valid credit card number")
+//    @CreditCardNumber(ignoreNonDigitCharacters = true, message = "Not a valid credit card number")
+    @NotBlank(message = "Credit card number is required")
     private String ccNumber;
 
     @Pattern(regexp = "^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$", message = "Must be formatted MM/YY")
@@ -44,6 +47,6 @@ public class Order {
     private List<Taco> tacos = new ArrayList<>();
 
     public void addDesign(Taco design) {
-        this.tacos.add(design);
+        tacos.add(design);
     }
 }
