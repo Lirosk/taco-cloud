@@ -1,5 +1,7 @@
 package com.example.tacocloud.misc;
 
+import java.util.Optional;
+
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,7 @@ public class IngredientByIdController implements Converter<String, Ingredient> {
 
     @Override
     public Ingredient convert(String id) {
-        return ingredientRepository.findOne(id);
+        Optional<Ingredient> optionalIngredient = ingredientRepository.findById(id);
+        return optionalIngredient.orElse(null);
     }
 }
