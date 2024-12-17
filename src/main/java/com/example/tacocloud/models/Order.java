@@ -6,10 +6,13 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 
+import com.example.tacocloud.users.CustomUserDetails;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
@@ -53,6 +56,9 @@ public class Order {
 
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
     private String ccCVV;
+
+    @ManyToOne
+    private CustomUserDetails user;
 
     @ManyToMany
     private List<Taco> tacos = new ArrayList<>();

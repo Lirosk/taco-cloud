@@ -1,41 +1,63 @@
 package com.example.tacocloud.security;
 
-import javax.sql.DataSource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+    private final UserDetailsService userDetailsService;
+
     @Bean
-    public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder()
-                .setType(EmbeddedDatabaseType.H2)
-                .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
-                .build();
+    public PasswordEncoder passwordEncoder() {
+        return new StandardPasswordEncoder();
     }
 
     @Bean
-    public UserDetailsManager users(DataSource dataSource) {
-        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-        users.createUser(User.withDefaultPasswordEncoder()
-                .username("buzz")
-                .password("infinity")
-                .authorities("ROLE_USER")
-                .build());
-        users.createUser(User.withDefaultPasswordEncoder()
-                .username("woody")
-                .password("bullseye")
-                .authorities("ROLE_USER")
-                .build());
-        return users;
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(httpRequests ->
+                httpRequests
+                        .requestMatchers("/design", "/orders")
+                        .hasAuthority("ROLE_USER")
+                        .requestMatchers("/", "/**")
+                        .permitAll()
+        );
+        http.formLogin(form ->
+                form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/design")
+        );
+        http.logout(logout ->
+                logout
+                        .logoutSuccessUrl("/")
+        );
+
+        http.csrf(csrf ->
+                csrf
+                        .ignoringRequestMatchers("/h2-console/**")
+        );
+        http.headers(headers ->
+                headers
+                        .frameOptions(frameOptions ->
+                                frameOptions
+                                        .sameOrigin()
+                        ));
+        return http.build();
     }
 }
