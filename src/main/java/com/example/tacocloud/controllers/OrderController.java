@@ -1,7 +1,11 @@
 package com.example.tacocloud.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,9 +17,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.example.tacocloud.models.Order;
 import com.example.tacocloud.repositories.OrderRepository;
 import com.example.tacocloud.users.CustomUserDetails;
+import com.example.tacocloud.utils.OrderProps;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,6 +31,13 @@ import lombok.extern.slf4j.Slf4j;
 @SessionAttributes("order")
 public class OrderController {
     private final OrderRepository orderRepository;
+    private final OrderProps orderProps;
+
+    @GetMapping
+    public String ordersForUser(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+        model.addAttribute("orders", orderRepository.findAllByUserOrderByPlacedAtDesc(user, PageRequest.of(0, orderProps.getPageSize())));
+        return "orderList";
+    }
 
     @GetMapping("/current")
     public String orderForm(@AuthenticationPrincipal CustomUserDetails user, @ModelAttribute Order order) {
