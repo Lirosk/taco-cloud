@@ -5,12 +5,12 @@ spring:
   application:
     name: taco-cloud
   profiles:
-    default: prod
+    default: dev
 ---
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: dev
   h2:
     console:
       enabled: true

@@ -20,7 +20,7 @@ import com.example.tacocloud.repositories.TacoRepository;
 import com.example.tacocloud.repositories.UserRepository;
 import com.example.tacocloud.users.CustomUserDetails;
 
-@Profile("prod")
+@Profile("dev")
 @Configuration
 public class DevelopmentConfig {
     @Bean
