@@ -1,5 +1,6 @@
 package tacocloud.api;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,7 @@ import tacocloud.data.IngredientRepository;
 import tacocloud.domain.Ingredient;
 
 @RestController
-@RequestMapping(path = "/ingredients", produces = "application/json")
+@RequestMapping(path = "/ingredients", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class IngredientController {

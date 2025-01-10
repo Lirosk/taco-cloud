@@ -6,4 +6,6 @@ import tacocloud.domain.CustomUserDetails;
 
 public interface UserRepository extends CrudRepository<CustomUserDetails, Long> {
     CustomUserDetails findByUsername(String username);
+
+    CustomUserDetails findByIdAndUsername(Long id, String username);
 }

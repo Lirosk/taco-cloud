@@ -1,9 +1,8 @@
 package tacocloud.api;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
@@ -17,11 +16,11 @@ public class TacoModel extends RepresentationModel<TacoModel> {
 
     private final String name;
     private final Date createdAt;
-    private final List<IngredientModel> ingredients;
+    private final CollectionModel<IngredientModel> ingredients;
 
     public TacoModel(Taco taco) {
         this.name = taco.getName();
         this.createdAt = taco.getCreatedAt();
-        this.ingredients = new ArrayList<>(ingredientModelAssembler.toCollectionModel(taco.getIngredients()).getContent());
+        this.ingredients = ingredientModelAssembler.toCollectionModel(taco.getIngredients());
     }
 }

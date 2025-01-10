@@ -26,7 +26,6 @@
         <module>api</module>
         <module>data</module>
         <module>domain</module>
-        <module>security</module>
     </modules>
 
 </project>

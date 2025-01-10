@@ -1,6 +1,8 @@
 package tacocloud.api;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,29 +20,29 @@ import tacocloud.data.OrderRepository;
 import tacocloud.domain.Order;
 
 @RestController
-@RequestMapping(path = "/orders", produces = "application/json")
+@RequestMapping(path = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class OrderApiController {
     private final OrderRepository orderRepository;
 
-    @GetMapping(produces = "application/json")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Order postOrder(@RequestBody Order order) {
         return orderRepository.save(order);
     }
 
-    @PutMapping(path = "/{orderId}", consumes = "application/json")
+    @PutMapping(path = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Order putOrder(@RequestBody Order order) {
         return orderRepository.save(order);
     }
 
-    @PatchMapping(path = "/{orderId}", consumes = "application/json")
+    @PatchMapping(path = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Order patchOrder(@PathVariable("orderId") Long orderId, @RequestBody Order patch) {
         Order order = orderRepository.findById(orderId).get();
         if (patch.getDeliveryName() != null) {
@@ -73,6 +75,9 @@ public class OrderApiController {
     @DeleteMapping("/{orderId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable("orderId") Long orderId) {
-        orderRepository.deleteById(orderId);
+        try {
+            orderRepository.deleteById(orderId);
+        } catch (EmptyResultDataAccessException _) {
+        }
     }
 }

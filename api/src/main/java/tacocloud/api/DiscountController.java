@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/discounts")
+@RequestMapping(path = "/discounts", produces = "application/json")
 @RequiredArgsConstructor
 public class DiscountController {
     private final DiscountCodeProperties discountCodeProperties;
 
-    @GetMapping(produces = "application/json")
+    @GetMapping
     public Map<String, Integer> getDiscountCodes() {
         return discountCodeProperties.getCodes();
     }

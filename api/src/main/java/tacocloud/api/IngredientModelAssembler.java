@@ -9,10 +9,10 @@ public class IngredientModelAssembler extends RepresentationModelAssemblerSuppor
         super(IngredientController.class, IngredientModel.class);
     }
 
-//    @Override
-//    protected IngredientModel instantiateModel(Ingredient ingredient) {
-//        return new IngredientModel(ingredient);
-//    }
+    @Override
+    protected IngredientModel instantiateModel(Ingredient ingredient) {
+        return new IngredientModel(ingredient);
+    }
 
     @Override
     public IngredientModel toModel(Ingredient ingredient) {
