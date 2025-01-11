@@ -1,20 +1,16 @@
 package tacocloud.api;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.hateoas.PagedModel;
-import org.springframework.hateoas.server.EntityLinks;
-import org.springframework.hateoas.server.RepresentationModelProcessor;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
-import tacocloud.domain.Taco;
+import tacocloud.domain.Ingredient;
 
 @Configuration
-public class SpringDataRestConfiguration {
-    @Bean
-    public RepresentationModelProcessor<PagedModel<TacoModel>> tacoProcessor(EntityLinks entityLinks) {
-        return model -> {
-            model.add(entityLinks.linkFor(Taco.class).slash("recent").withRel("recents"));
-            return model;
-        };
+public class SpringDataRestConfiguration implements RepositoryRestConfigurer {
+    @Override
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+        config.exposeIdsFor(Ingredient.class);
     }
 }
