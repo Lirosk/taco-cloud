@@ -20,8 +20,7 @@ public class JwtEncoder {
     public String encode(CustomUserDetails customUser) {
         return JWT.create()
                 .withSubject(String.valueOf(customUser.getId()))
-                .withExpiresAt(Instant.now().plus(Duration.of(30, ChronoUnit.MINUTES)))
-                .withClaim(Claims.ID, customUser.getId())
+                .withExpiresAt(Instant.now().plus(Duration.of(jwtConfiguration.getTokenExpireInMinutes(), ChronoUnit.MINUTES)))
                 .withClaim(Claims.USERNAME, customUser.getUsername())
                 .sign(Algorithm.HMAC256(jwtConfiguration.getSecretKey()));
     }

@@ -10,4 +10,5 @@ import lombok.Data;
 @ConfigurationProperties("security.jwt")
 public class JwtConfiguration {
     private String secretKey;
+    private int tokenExpireInMinutes;
 }

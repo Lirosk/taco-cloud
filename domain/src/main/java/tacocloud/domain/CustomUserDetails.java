@@ -22,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 public class CustomUserDetails implements UserDetails {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
-    private final String name;
+    private final String username;
     private final String password;
     private final String fullname;
     private final String street;
@@ -36,10 +36,5 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
-    public String getUsername() {
-        return "";
     }
 }

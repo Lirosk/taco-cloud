@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import lombok.RequiredArgsConstructor;
 import tacocloud.data.TacoRepository;
 import tacocloud.domain.Taco;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RepositoryRestController
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class RecentTacosController {
         PageRequest page = PageRequest.of(0, 12, Sort.by("createdAt").descending());
         List<Taco> tacos = tacoRepository.findAll(page).getContent();
         CollectionModel<TacoModel> recentModels = new TacoModelAssembler().toCollectionModel(tacos);
-        recentModels.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RecentTacosController.class).getRecentTacos()).withRel("recents"));
+        recentModels.add(linkTo(methodOn(RecentTacosController.class).getRecentTacos()).withRel("recents"));
         return new ResponseEntity<>(recentModels, HttpStatus.OK);
     }
 }

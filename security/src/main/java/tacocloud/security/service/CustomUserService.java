@@ -1,4 +1,4 @@
-package tacocloud.security.services;
+package tacocloud.security.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

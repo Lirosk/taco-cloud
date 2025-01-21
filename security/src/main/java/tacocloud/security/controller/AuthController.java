@@ -1,4 +1,4 @@
-package tacocloud.security.controllers;
+package tacocloud.security.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -13,7 +13,7 @@ import tacocloud.security.dto.LoginRequest;
 import tacocloud.security.dto.LoginResponse;
 import tacocloud.security.dto.RegistrationRequest;
 import tacocloud.security.dto.UserInfo;
-import tacocloud.security.services.AuthService;
+import tacocloud.security.service.AuthService;
 
 @RestController
 @RequiredArgsConstructor

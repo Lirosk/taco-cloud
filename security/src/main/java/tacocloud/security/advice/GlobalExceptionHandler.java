@@ -1,4 +1,4 @@
-package tacocloud.security.advices;
+package tacocloud.security.advice;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

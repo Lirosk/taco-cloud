@@ -60,12 +60,6 @@
         </dependency>
         <dependency>
             <groupId>taco-cloud</groupId>
-            <artifactId>domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>taco-cloud</groupId>
             <artifactId>data</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>

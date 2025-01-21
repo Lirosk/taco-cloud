@@ -18,7 +18,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table
+@Table(name = "TacoOrder")
 public class Order {
     @Id
     @GeneratedValue

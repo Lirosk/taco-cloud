@@ -1,4 +1,4 @@
-package tacocloud.security.services;
+package tacocloud.security.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
