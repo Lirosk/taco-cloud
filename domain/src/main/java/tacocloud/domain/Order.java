@@ -1,5 +1,6 @@
 package tacocloud.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "TacoOrder")
-public class Order {
+public class Order implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
