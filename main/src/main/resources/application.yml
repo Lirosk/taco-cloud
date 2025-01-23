@@ -8,10 +8,6 @@ spring:
   data:
     rest:
       base-path: /rest-api
-  artemis:
-    broker-url: artemis.tacocloud.com:61616
-    user: tacocloud
-    password: qwe
 security:
   jwt:
     token-expire-in-minutes: 30
