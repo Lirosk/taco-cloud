@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import tacocloud.data.OrderRepository;
 import tacocloud.domain.Order;
+import tacocloud.messaging.OrderMessagingService;
 
 @RestController
 @RequestMapping(path = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -25,6 +26,7 @@ import tacocloud.domain.Order;
 @RequiredArgsConstructor
 public class OrderApiController {
     private final OrderRepository orderRepository;
+    private final OrderMessagingService messagingService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Order> getAllOrders() {
@@ -34,6 +36,7 @@ public class OrderApiController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Order postOrder(@RequestBody Order order) {
+        messagingService.sendOrder(order);
         return orderRepository.save(order);
     }
 

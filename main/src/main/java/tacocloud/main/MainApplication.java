@@ -14,10 +14,11 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import lombok.extern.slf4j.Slf4j;
+import tacocloud.kitchen.KafkaConsumerConfiguration;
 import tacocloud.security.security.SecurityConfiguration;
 
 @SpringBootApplication
-@Import(SecurityConfiguration.class)
+@Import({SecurityConfiguration.class, KafkaConsumerConfiguration.class})
 @Slf4j
 public class MainApplication {
     public static void main(String[] args) {

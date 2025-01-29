@@ -28,6 +28,7 @@
         <module>domain</module>
         <module>security</module>
         <module>kitchen</module>
+        <module>messaging</module>
     </modules>
 
 </project>

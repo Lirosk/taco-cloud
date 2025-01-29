@@ -74,6 +74,12 @@
             <artifactId>selenium-java</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>taco-cloud</groupId>
+            <artifactId>kitchen</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
