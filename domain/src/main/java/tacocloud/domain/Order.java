@@ -30,6 +30,9 @@ public class Order implements Serializable {
     @ManyToOne
     private CustomUserDetails user;
 
+    @NotBlank(message = "Email is required")
+    private String email;
+
     @NotBlank(message = "Delivery name is required")
     private String deliveryName;
 

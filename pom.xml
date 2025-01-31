@@ -29,6 +29,7 @@
         <module>security</module>
         <module>kitchen</module>
         <module>messaging</module>
+        <module>email</module>
     </modules>
 
 </project>

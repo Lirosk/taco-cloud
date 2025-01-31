@@ -26,17 +26,17 @@ import tacocloud.messaging.OrderMessagingService;
 @RequiredArgsConstructor
 public class OrderApiController {
     private final OrderRepository orderRepository;
-    private final OrderMessagingService messagingService;
+    private final OrderMessagingService orderMessagingService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = {"/", "fromEmail"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Order postOrder(@RequestBody Order order) {
-        messagingService.sendOrder(order);
+        orderMessagingService.sendOrder(order);
         return orderRepository.save(order);
     }
 
