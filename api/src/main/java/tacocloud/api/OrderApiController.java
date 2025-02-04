@@ -33,7 +33,7 @@ public class OrderApiController {
         return orderRepository.findAll();
     }
 
-    @PostMapping(path = {"/", "fromEmail"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = {"", "/fromEmail"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Order postOrder(@RequestBody Order order) {
         orderMessagingService.sendOrder(order);
